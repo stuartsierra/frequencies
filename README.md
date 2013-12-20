@@ -22,7 +22,8 @@ library provides helpers for creating bucketed frequency maps.
 
 ## Releases and Dependency Information
 
-No binary releases yet. Run `lein install` in this directory.
+No binary releases yet. Run `lein install` in this directory to
+install the current -SNAPSHOT version.
 
 [Leiningen] dependency information:
 
@@ -40,7 +41,7 @@ No binary releases yet. Run `lein install` in this directory.
 [Maven]: http://maven.apache.org/
 [Gradle] dependency information:
 
-    compile "com.stuartsierra:frequencies:0.1.0"
+    compile "com.stuartsierra:frequencies:0.1.0-SNAPSHOT"
 
 [Clojars]: http://clojars.org/
 [Leiningen]: http://leiningen.org/
@@ -93,11 +94,16 @@ about it:
 ```
 
 The map elements `:mean`, `:median`, `:min`, and `:max` are
-self-explanatory.
+self-explanatory. `:sum` is the sum of all values in the input
+sequence. `:sample-count` is the number of elements in the input
+sequence.
+
+`:variance` and `:stdev` are the [variance](http://en.wikipedia.org/wiki/Variance)
+and [standard deviation](http://en.wikipedia.org/wiki/Standard_deviation), respectively.
 
 `:percentiles` is a map of [percentiles](http://en.wikipedia.org/wiki/Percentile).
 For example the key 75 is associated with the value in the data set
-which is *greater than* 75% of the data set. The 50th percential is
+which is *greater than* 75% of the data set. The 50th percentile is
 the median. These percentiles are computed by the
 [nearest-rank](http://en.wikipedia.org/wiki/Percentile#Nearest_rank)
 method.
@@ -119,14 +125,14 @@ Given this input sequence:
   (repeatedly 10000 #(rand)))
 ```
 
-Create a bucket frequency map with a bucket-size of 0.001:
+Create a bucketed frequency map with a bucket-size of 0.001:
 
 ```
 (def bucket-freq-map
   (freq/bucket-frequencies 0.001 (example-continuous-sequence)))
 ```
 
-Keys in the bucket frequency map will be multiples of the bucket size:
+Keys in the bucketed frequency map will be multiples of the bucket size:
 
 ```clojure
 (take 5 (keys bucket-freq-map))
@@ -134,15 +140,16 @@ Keys in the bucket frequency map will be multiples of the bucket size:
 ```
 
 Values in the map will be counts of the number of observed values in
-the input sequence which are *less than equal to* the key, but greater
-than the next-smallest key.
+the input sequence which are **less than or equal to** the key, but
+greater than the next-smallest key. For example, to get the number of
+inputs between 0.100 and 0.101, call:
 
 ```clojure
 (get bucket-freq-map 0.101)
 ;;=> 9
 ```
 
-Statistical computations on bucket frequency maps are *approximate*,
+Statistical computations on bucket frequency maps are **approximate**,
 but they are computed the same way:
 
 ```clojure
@@ -168,6 +175,13 @@ but they are computed the same way:
 ## Change Log
 
 * Version 0.1.0-SNAPSHOT
+
+
+
+## Acknowledgments
+
+Special thanks to [Craig Andera](https://github.com/candera) for
+advice and code review.
 
 
 
