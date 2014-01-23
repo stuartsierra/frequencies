@@ -75,13 +75,6 @@
       (lazy-seq (concat (repeat frequency value)
                         (values (rest freq-map)))))))
 
-(comment
-  ;; Naive but obviously correct implementation of quantile*
-  (defn quantile*
-    [sorted-freq-map k q sample-count]
-    (let [rank (long (Math/ceil (* k (/ (double sample-count) q))))]
-      (nth (values sorted-freq-map) rank))))
-
 (defn quantile*
   [sorted-freq-map k q sample-count]
   "Like quantile but takes sample-count as an argument. For when you
@@ -112,6 +105,11 @@
   [freq-map k q]
   (quantile* (ensure-sorted freq-map) k q (sample-count freq-map)))
 
+(defn median
+  "Returns the median of the observed values in the frequency map."
+  [freq-map]
+  (quantile freq-map 1 2))
+
 (defn percentiles*
   "Like percentiles but the sample-count is provided as an argument
   instead of computed, and the frequency map must already be sorted."
@@ -124,19 +122,13 @@
 (defn percentiles
   "Returns a map of percentile values from the frequency map. Argument
   'percentiles' is a collection of percentile targets, which will be
-  keys in the returned map. For example, a percentiles argument of [25
-  50 99.9] would return a map containing the 25th, 50th (median), and
-  99.9th percentile." [freq-map percentiles]
+  keys in the returned map. For example, a percentiles argument of 
+  [25 50 99.9] would return a map containing the 25th, 50th (median), 
+  and 99.9th percentile."
+  [freq-map percentiles]
   (percentiles* (ensure-sorted freq-map)
                 percentiles
                 (sample-count freq-map)))
-
-(comment
-  ;; Naive but obviously correct implementation of variance*
-  (defn variance*
-    [freq-map mean sample-count]
-    (reduce + (map #(/ (Math/pow (- (double %) mean) 2) sample-count)
-                   (values freq-map)))))
 
 (defn variance*
   "Like 'variance' but takes the mean and sample count as arguments

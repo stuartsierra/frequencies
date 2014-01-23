@@ -1,23 +1,26 @@
 # com.stuartsierra/frequencies
 
-Basic statistical computations on frequency maps. 
+Basic statistical computations on frequency maps.
 
 A *frequency map* (freq-map) is a map from observed values to their
-frequency in a data set, such as that produced by the function
-`clojure.core/frequencies`.
+frequency in a data set. The Clojure function
+`clojure.core/frequencies` produces a frequency map.
 
 If the range of values is relatively small (for example, a few
 thousand integers), then the frequency map can completely describe the
 distribution of inputs while using much less memory than the original
 data set. This makes frequency maps particularly useful for computing
 statistics on large collections of discrete values, such as
-millisecond-precision time measurements in a benchmark or log.
+millisecond time measurements in a benchmark or log.
 
 Even if the range of values is continuous (for example, floating-point
 numbers) or very large, a frequency map can *approximate* the
 distribution if the values are grouped into "buckets" of a reasonable
 size. In this case, the frequency map resembles a histogram. This
 library provides helpers for creating bucketed frequency maps.
+
+This library computes basic statistics about a data set using its
+frequency map: mean, median, standard deviation, and percentiles.
 
 
 ## Releases and Dependency Information
@@ -102,7 +105,7 @@ sequence.
 and [standard deviation](http://en.wikipedia.org/wiki/Standard_deviation), respectively.
 
 `:percentiles` is a map of [percentiles](http://en.wikipedia.org/wiki/Percentile).
-For example the key 75 is associated with the value in the data set
+For example, the key 75 is associated with the value in the data set
 which is *greater than* 75% of the data set. The 50th percentile is
 the median. These percentiles are computed by the
 [nearest-rank](http://en.wikipedia.org/wiki/Percentile#Nearest_rank)
