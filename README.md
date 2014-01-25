@@ -26,26 +26,32 @@ frequency map: mean, median, standard deviation, and percentiles.
 
 ## Releases and Dependency Information ##
 
-No binary releases yet. Run `lein install` in this directory to
-install the current -SNAPSHOT version.
+I publish releases on [Clojars].
+
+Latest stable release is [0.1.0].
 
 [Leiningen] dependency information:
 
-    [com.stuartsierra/frequencies "0.1.0-SNAPSHOT"]
+    [com.stuartsierra/frequencies "0.1.0"]
 
 [Maven] dependency information:
 
     <dependency>
       <groupId>com.stuartsierra</groupId>
       <artifactId>frequencies</artifactId>
-      <version>0.1.0-SNAPSHOT</version>
+      <version>0.1.0</version>
     </dependency>
 
-[Leiningen]: http://leiningen.org/
-[Maven]: http://maven.apache.org/
+Maven repository information:
+
+    <repository>
+      <id>clojars.org</id>
+      <url>http://clojars.org/repo</url>
+    </repository>
+
 [Gradle] dependency information:
 
-    compile "com.stuartsierra:frequencies:0.1.0-SNAPSHOT"
+    compile "com.stuartsierra:frequencies:0.1.0"
 
 [Clojars]: http://clojars.org/
 [Leiningen]: http://leiningen.org/
@@ -235,7 +241,9 @@ to get the map key.
 
 ## Change Log ##
 
-* Version 0.1.0-SNAPSHOT
+* Version [0.1.0] released on 25-Jan-2014
+
+[0.1.0]: https://github.com/stuartsierra/frequencies/tree/frequencies-0.1.0
 
 
 
