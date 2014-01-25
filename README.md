@@ -187,6 +187,51 @@ but they are computed the same way:
 ```
 
 
+### Building Your Own Frequency Maps ###
+
+You can easily create a frequency map for any data set while iterating
+through a large sequence by replicating the reduction function in
+`clojure.core/frequencies` or `com.stuartsierra.frequencies/bucket-frequencies`.
+In this way, you can create a frequency map while simultaneously
+computing other summary information in a single pass through the input
+sequence.
+
+For example, if you are reducing a large sequence of maps containing
+an integer value `:time-in-msecs`, you might write something like this:
+
+```clojure
+(defn summarize-times [seq-of-data-maps]
+  (reduce (fn [summary data]
+            (-> summary
+                ;; maybe compute some other stuff in summary
+                (update-in [:times (:time-in-msecs data)]
+                           (fnil inc 0))))
+          {}
+          seq-of-data-maps))
+```
+
+Likewise, if you have a sequence of floating-point values, you just
+need to pick a bucket size and use `com.stuartsierra.frequencies/bucket`
+to get the map key.
+
+```clojure
+(def bucket-size 1.0)
+
+(defn summarize-values [seq-of-data-maps]
+  (-> (reduce (fn [m data]
+                (let [value (:floating-point-value data)
+                      ;; Get the bucket for this value:
+                      bucket (freq/bucket value bucket-size)]
+                  ;; Add it to the bucketed frequency map:
+                  (update-in m [:buckets bucket] (fnil inc 0))))
+              {}
+              seq-of-data-maps)
+      ;; Finally, replace the keys of the frequency map with their
+      ;; actual values
+      (update-in [:buckets] freq/recover-bucket-keys bucket-size)))
+```
+
+
 
 ## Change Log ##
 
