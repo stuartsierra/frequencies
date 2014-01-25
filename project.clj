@@ -5,9 +5,5 @@
             :url "http://opensource.org/licenses/MIT"}
   :profiles {:dev {:dependencies [[org.clojure/clojure "1.5.1"]
                                   [reiddraper/simple-check "0.5.3"]]}
-             ;; For checking statistical results with Incanter
-             :incanter {:dependencies [[org.clojure/clojure "1.5.1"]
-                                       [org.clojure/tools.namespace "0.2.4"]
-                                       [org.clojure/tools.nrepl "0.2.3"]
-                                       [incanter "1.5.4"]]
-                        :source-paths ["dev"]}})
+             :clj1.4 {:dependencies [[org.clojure/clojure "1.4.0"]
+                                     [reiddraper/simple-check "0.5.3"]]}})
