@@ -241,6 +241,7 @@ to get the map key.
 
 ## Change Log ##
 
+* Version 0.1.1-SNAPSHOT (current Git `master` branch)
 * Version [0.1.0] released on 25-Jan-2014
 
 [0.1.0]: https://github.com/stuartsierra/frequencies/tree/frequencies-0.1.0
