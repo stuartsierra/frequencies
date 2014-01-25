@@ -3,7 +3,7 @@
             [simple-check.core :as sc]
             [simple-check.generators :as gen]
             [simple-check.properties :as prop]
-            [simple-check.clojure-test :refer (defspec)]))
+            [simple-check.clojure-test :refer [defspec]]))
 
 ;;; Naive implementations of the statistics that use the original
 ;;; sequences.
@@ -23,6 +23,9 @@
 
 (defn quantile
   [coll k q]
+  ;; This doesn't always produce the same results as
+  ;; com.stuartsierra.frequencies/quantile*, but they don't disagree
+  ;; by much.
   (let [rank (long (Math/ceil (* k (/ (double (count coll)) q))))]
     (nth (sort coll) rank)))
 
@@ -88,6 +91,7 @@
             (stdev v))))
 
 (comment
+  ;; I can't get this one to work consistently.
   (defspec t-percentile-99 1000
     (prop/for-all [v number-coll]
       (close? (freq/quantile (frequencies v) 99 100)
