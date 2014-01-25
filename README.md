@@ -23,7 +23,8 @@ This library computes basic statistics about a data set using its
 frequency map: mean, median, standard deviation, and percentiles.
 
 
-## Releases and Dependency Information
+
+## Releases and Dependency Information ##
 
 No binary releases yet. Run `lein install` in this directory to
 install the current -SNAPSHOT version.
@@ -52,14 +53,21 @@ install the current -SNAPSHOT version.
 [Gradle]: http://www.gradle.org/
 
 
-## Dependencies and Compatibility
 
-This library has no dependencies other than Clojure itself.
+## Dependencies and Compatibility ##
 
-I have tested this library with Clojure 1.5.1 only.
+This library has no runtime dependencies other than Clojure itself.
+
+I have tested this library with Clojure 1.5.1 and 1.4 using Reid
+Draper's [simple-check] library.
+
+You can run the tests with `lein test`.
+
+[simple-check]: https://github.com/reiddraper/simple-check
 
 
-## Usage
+
+## Usage ##
 
 ```clojure
 (ns examples
@@ -107,16 +115,20 @@ and [standard deviation](http://en.wikipedia.org/wiki/Standard_deviation), respe
 `:percentiles` is a map of [percentiles](http://en.wikipedia.org/wiki/Percentile).
 For example, the key 75 is associated with the value in the data set
 which is *greater than* 75% of the data set. The 50th percentile is
-the median. These percentiles are computed by the
+the median.
+
+**Note:** There isn't any universally agreed-upon algorithm for
+computing percentiles. I have attempted to use the
 [nearest-rank](http://en.wikipedia.org/wiki/Percentile#Nearest_rank)
-method.
+method, but my implementation may produce results slightly different
+from those of other implementations.
 
 All of the individual statistics are available as separate functions
 in the `com.stuartsierra.frequencies` namespace. Refer to the source
 for details.
 
 
-### Bucketed Frequency Maps
+### Bucketed Frequency Maps ###
 
 If the range of possible values is large or continuous, you will need
 to group them into buckets to create a frequency map.
@@ -175,24 +187,28 @@ but they are computed the same way:
 ```
 
 
-## Change Log
+
+## Change Log ##
 
 * Version 0.1.0-SNAPSHOT
 
 
 
-## Acknowledgments
+## Acknowledgments ##
 
 Special thanks to [Craig Andera](https://github.com/candera) for
 advice and code review.
 
+Thanks to [Cognitect](http://cognitect.com/) for providing me with
+"20% time" to work on open-source projects.
 
 
-## Copyright and License
+
+## Copyright and License ##
 
 The MIT License (MIT)
 
-Copyright © 2013 Stuart Sierra
+Copyright © 2014 Stuart Sierra
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
