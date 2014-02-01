@@ -76,10 +76,10 @@
                         (values (rest freq-map)))))))
 
 (defn quantile*
-  [sorted-freq-map k q sample-count]
   "Like quantile but takes sample-count as an argument. For when you
   already know the sample-count and don't want to recompute it. Also
   assumes that the frequency map is already sorted."
+  [sorted-freq-map k q sample-count]
   (let [rank (long (Math/ceil (* k (/ (double sample-count) q))))]
     (loop [m (seq sorted-freq-map)
            lower 0
@@ -143,8 +143,8 @@
              freq-map))
 
 (defn variance
-  [freq-map]
   "Returns the variance of observed values in a frequency map."
+  [freq-map]
   (variance* freq-map (mean freq-map) (sample-count freq-map)))
 
 (defn stdev
