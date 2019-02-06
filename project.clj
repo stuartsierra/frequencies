@@ -1,4 +1,4 @@
-(defproject com.troy-west/frequencies "0.1.1-SNAPSHOT"
+(defproject com.troy-west/frequencies "0.1.1"
   :description "Basic statistical computations on frequency maps (histograms)"
   :url "https://github.com/stuartsierra/frequencies"
   :license {:name "The MIT License"
