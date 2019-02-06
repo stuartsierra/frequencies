@@ -116,7 +116,7 @@
   instead of computed, and the frequency map must already be sorted."
   [sorted-freq-map percentiles sample-count]
   (reduce (fn [m k]
-            (assoc m k (quantile* sorted-freq-map k 100.0 sample-count)))
+            (assoc m (keyword (str "p" k)) (quantile* sorted-freq-map k 100.0 sample-count)))
           (sorted-map)
           percentiles))
 
@@ -181,7 +181,7 @@
         percentiles (percentiles* sorted-freq-map
                                   percentiles
                                   sample-count)
-        median (or (get percentiles 50)
+        median (or (get percentiles :p50)
                    (quantile* sorted-freq-map 1 2 sample-count))]
     (array-map
      :mean mean
