@@ -83,7 +83,8 @@
   (let [rank (long (Math/ceil (* k (/ (double sample-count) q))))]
     (loop [m (seq sorted-freq-map)
            lower 0
-           prev-value Double/NEGATIVE_INFINITY]
+           prev-value #?(:clj  Double/NEGATIVE_INFINITY
+                         :cljs (.-NEGATIVE_INFINITY js/Number))]
       (if-let [entry (first m)]
         (let [[value freq] entry
               upper (+ lower freq)]
