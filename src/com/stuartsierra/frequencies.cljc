@@ -83,7 +83,8 @@
   (let [rank (long (Math/ceil (* k (/ (double sample-count) q))))]
     (loop [m (seq sorted-freq-map)
            lower 0
-           prev-value Double/NEGATIVE_INFINITY]
+           prev-value #?(:clj  Double/NEGATIVE_INFINITY
+                         :cljs (.-NEGATIVE_INFINITY js/Number))]
       (if-let [entry (first m)]
         (let [[value freq] entry
               upper (+ lower freq)]
@@ -115,7 +116,7 @@
   instead of computed, and the frequency map must already be sorted."
   [sorted-freq-map percentiles sample-count]
   (reduce (fn [m k]
-            (assoc m k (quantile* sorted-freq-map k 100.0 sample-count)))
+            (assoc m (keyword (str "p" k)) (quantile* sorted-freq-map k 100.0 sample-count)))
           (sorted-map)
           percentiles))
 
@@ -180,7 +181,7 @@
         percentiles (percentiles* sorted-freq-map
                                   percentiles
                                   sample-count)
-        median (or (get percentiles 50)
+        median (or (get percentiles :p50)
                    (quantile* sorted-freq-map 1 2 sample-count))]
     (array-map
      :mean mean
