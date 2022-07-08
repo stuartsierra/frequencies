@@ -122,13 +122,15 @@
 (defn percentiles
   "Returns a map of percentile values from the frequency map. Argument
   'percentiles' is a collection of percentile targets, which will be
-  keys in the returned map. For example, a percentiles argument of 
-  [25 50 99.9] would return a map containing the 25th, 50th (median), 
+  keys in the returned map. For example, a percentiles argument of
+  [25 50 99.9] would return a map containing the 25th, 50th (median),
   and 99.9th percentile."
   [freq-map percentiles]
-  (percentiles* (ensure-sorted freq-map)
-                percentiles
-                (sample-count freq-map)))
+  (let [sorted-freq-map (ensure-sorted freq-map)
+        num-samples (sample-count sorted-freq-map)]
+    (percentiles* sorted-freq-map
+                  percentiles
+                  num-samples)))
 
 (defn variance*
   "Like 'variance' but takes the mean and sample count as arguments
